@@ -3,6 +3,8 @@ import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
+// Mobile browsers resize the viewport as the address bar shows and hides; don't re-layout for that.
+ScrollTrigger.config({ ignoreMobileResize: true })
 
 export const reducedMotion =
   typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches

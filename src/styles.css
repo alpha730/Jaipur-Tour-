@@ -31,6 +31,17 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
+html,
+body {
+  overflow-x: hidden;
+}
+@supports (overflow: clip) {
+  html,
+  body {
+    overflow-x: clip;
+  }
+}
+
 body {
   margin: 0;
   background: var(--night);
@@ -38,7 +49,12 @@ body {
   font-family: var(--sans);
   font-weight: 300;
   -webkit-font-smoothing: antialiased;
-  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+.day,
+.finale {
+  overflow-x: clip;
 }
 
 h1, h2, h3, h4, p, figure {
@@ -84,6 +100,11 @@ a {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   pointer-events: none;
+  transition: transform 0.45s ease, opacity 0.45s ease;
+}
+.chrome-hidden .brand {
+  transform: translateY(-160%);
+  opacity: 0;
 }
 .brand b {
   font-family: var(--display);
@@ -469,6 +490,9 @@ a {
   background: var(--fibres), var(--grain), var(--paper);
   color: var(--ink);
 }
+.sheet-paper > * {
+  min-width: 0;
+}
 .sheet-head {
   text-align: center;
 }
@@ -494,7 +518,7 @@ a {
   max-width: 1060px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1.08fr 1fr;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
   padding: 16px;
   background: var(--grain), var(--card);
   rotate: -0.6deg;
@@ -879,11 +903,30 @@ a {
   }
   .day-nav {
     top: auto;
-    bottom: 12px;
+    bottom: calc(12px + env(safe-area-inset-bottom));
     right: 50%;
     transform: translateX(50%);
     flex-direction: row;
     padding: 2px 8px;
+    transition: transform 0.45s ease, opacity 0.45s ease;
+  }
+  .chrome-hidden .day-nav {
+    transform: translate(50%, 180%);
+    opacity: 0;
+  }
+  .hero-copy {
+    top: 112px;
+  }
+  .hero-kicker,
+  .hero-sub {
+    letter-spacing: 0.16em;
+    line-height: 1.6;
+  }
+  .kicker {
+    letter-spacing: 0.2em;
+  }
+  .day-title {
+    font-size: clamp(2.3rem, 11vw, 3.2rem);
   }
   .day-dot-label {
     display: none;
@@ -905,7 +948,7 @@ a {
   }
   .postcard,
   .postcard.is-flip {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding: 12px;
   }
   .postcard.is-flip .pc-photo {
@@ -923,6 +966,69 @@ a {
   }
   .credits ul {
     columns: 1;
+  }
+}
+
+/* Phones held sideways: very little height, so compact the stage copy. */
+@media (max-height: 520px) and (orientation: landscape) {
+  .brand span,
+  .gate-cue,
+  .scroll-cue {
+    display: none;
+  }
+  .hero-copy {
+    top: 50%;
+    translate: 0 -50%;
+  }
+  .hero-copy h1 {
+    font-size: clamp(3rem, 14vh, 4.4rem);
+  }
+  .hero-copy h1 span {
+    font-size: 1.3rem;
+    margin-top: 4px;
+  }
+  .hero-dev {
+    font-size: 1rem;
+  }
+  .hero-kicker,
+  .hero-sub {
+    margin-top: 6px;
+    font-size: 0.6rem;
+  }
+  .gate-label {
+    bottom: 32px;
+  }
+  .gate-label h3 {
+    font-size: 2rem;
+  }
+  .day-hero-copy {
+    bottom: 26px;
+    right: 220px;
+  }
+  .day-title {
+    margin-top: 8px;
+    font-size: clamp(1.8rem, 9vh, 2.6rem);
+  }
+  .day-place {
+    margin-top: 8px;
+  }
+  .day-tagline {
+    margin-top: 4px;
+    font-size: 1rem;
+  }
+  .photo-note {
+    font-size: 1.05rem;
+    bottom: 16px;
+  }
+  .day-nav {
+    gap: 0;
+    padding: 6px 2px;
+  }
+  .day-dot {
+    height: 24px;
+  }
+  .finale-copy h2 {
+    font-size: 3.6rem;
   }
 }
 

@@ -83,6 +83,9 @@ function DaySection({ day, first, onActive }) {
       })
       tl.to(q('.hero-copy, .gate-label, .gate-cue, .gate-note'), { opacity: 0, y: -40, duration: 0.1 }, 0)
         // The tear starts as a hairline crack, then rips apart.
+        // Until the tear begins, show the unsplit photo so no seam is visible.
+        .fromTo(q('.tear-half'), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.001 }, 0.03)
+        .set(q('.tear-whole'), { autoAlpha: 0 }, 0.031)
         .fromTo(q('.tear-rim'), { opacity: 0 }, { opacity: 1, duration: 0.05 }, 0.03)
         .to(q('.tear-half'), { filter: 'drop-shadow(0px 12px 28px rgba(0, 0, 0, 0.55))', duration: 0.08 }, 0.03)
         .to(q('.tear-left'), { xPercent: -3, rotateZ: -0.6, duration: 0.12, ease: 'power1.out' }, 0.04)
@@ -101,9 +104,11 @@ function DaySection({ day, first, onActive }) {
         { filter: 'brightness(1)', ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'top top', scrub: true } }
       )
 
+      // On phones the cards rise straight up; a sideways start would overhang the screen.
+      const slide = window.matchMedia('(max-width: 760px)').matches ? 0 : 80
       q('.postcard').forEach((el, i) => {
         gsap.from(el, {
-          x: i % 2 ? 80 : -80,
+          x: i % 2 ? slide : -slide,
           y: 60,
           rotate: i % 2 ? 4 : -4,
           opacity: 0,

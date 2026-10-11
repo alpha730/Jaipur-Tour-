@@ -11,6 +11,7 @@ function TearGate({ src, seed, eager }) {
   )
   return (
     <div className="tear-gate" aria-hidden="true">
+      <div className="tear-photo tear-whole">{img}</div>
       <div className="tear-half tear-left">
         <div className="tear-rim" style={{ clipPath: clip.leftRim }} />
         <div className="tear-photo" style={{ clipPath: clip.left }}>

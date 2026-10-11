@@ -21,6 +21,12 @@ export default function App() {
 
   useGSAP(() => {
     gsap.to(bar.current, { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } })
+    // Tuck the header and day nav away while reading downwards, so they never cover text.
+    ScrollTrigger.create({
+      start: 0,
+      end: 'max',
+      onUpdate: (self) => document.body.classList.toggle('chrome-hidden', self.direction === 1 && self.scroll() > 120),
+    })
   })
 
   return (
