@@ -8,7 +8,7 @@ import { days, trip } from '../src/data/itinerary.js'
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
 const credits = JSON.parse(readFileSync(path.join(root, 'src/data/credits.json'), 'utf8'))
-const out = path.join(root, 'public', trip.pdf.replace(/^\//, ''))
+const out = path.join(root, 'public', trip.pdf)
 const img = (key) => pathToFileURL(path.join(root, 'public/photos', `${key}.jpg`)).href
 
 // Google Maps search for each activity's location, keyed by its photo.

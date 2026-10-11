@@ -120,6 +120,9 @@ a {
   pointer-events: none;
   mix-blend-mode: screen;
 }
+.atmosphere * {
+  pointer-events: none !important;
+}
 
 .day-nav {
   position: fixed;

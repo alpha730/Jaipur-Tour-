@@ -1,7 +1,7 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap } from '../lib/scroll'
-import { days, photo, trip } from '../data/itinerary'
+import { asset, days, photo, trip } from '../data/itinerary'
 import credits from '../data/credits.json'
 import { deckleSheet } from '../lib/tear'
 
@@ -63,7 +63,7 @@ export default function Finale() {
           ))}
         </div>
         <p className="finale-conclusion">{trip.conclusion}</p>
-        <a className="download-btn" href={trip.pdf} download>
+        <a className="download-btn" href={asset(trip.pdf)} download>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M12 3v12m0 0-5-5m5 5 5-5M4 20h16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
           </svg>

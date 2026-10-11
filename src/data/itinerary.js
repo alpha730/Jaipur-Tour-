@@ -24,7 +24,7 @@ export const trip = {
       source: 'Mark Twain, Following the Equator (1897)',
     },
   ],
-  pdf: '/Jaipur-Cultural-Journey-Itinerary.pdf',
+  pdf: 'Jaipur-Cultural-Journey-Itinerary.pdf',
   conclusion:
     'This travel plan promises to immerse you in the vibrant culture, art, and textiles of Jaipur, creating cherished memories and a deeper appreciation for the traditional crafts of this enchanting city.',
 }
@@ -160,4 +160,7 @@ export const days = [
   },
 ]
 
-export const photo = (key) => `/photos/${key}.jpg`
+// Relative to the site's base URL so it also works when hosted in a subfolder.
+const base = import.meta.env?.BASE_URL ?? '/'
+export const photo = (key) => `${base}photos/${key}.jpg`
+export const asset = (file) => `${base}${file}`

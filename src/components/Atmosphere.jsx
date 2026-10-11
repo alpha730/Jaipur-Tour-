@@ -70,7 +70,7 @@ export default function Atmosphere() {
   const count = reducedMotion ? 80 : small ? 220 : 480
   return (
     <div className="atmosphere" aria-hidden="true">
-      <Canvas dpr={[1, 1.5]} gl={{ alpha: true, antialias: false }} camera={{ position: [0, 0, 8], fov: 60 }}>
+      <Canvas style={{ pointerEvents: 'none' }} dpr={[1, 1.5]} gl={{ alpha: true, antialias: false }} camera={{ position: [0, 0, 8], fov: 60 }}>
         <Motes count={count} />
       </Canvas>
     </div>
