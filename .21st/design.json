@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "project": {
+    "name": "jaipur-journey",
+    "productType": null,
+    "stack": [
+      "react",
+      "vite"
+    ]
+  },
+  "sources": {
+    "tokens": [],
+    "components": [],
+    "assets": [],
+    "instructions": []
+  },
+  "design": {
+    "colorMode": "unknown",
+    "colors": {},
+    "typography": {
+      "display": "Cormorant Garamond",
+      "body": "Outfit",
+      "hand": "Caveat",
+      "devanagari": "Tiro Devanagari Hindi"
+    },
+    "spacing": {},
+    "radius": {},
+    "shadows": {},
+    "motion": {},
+    "density": "unknown"
+  },
+  "components": {
+    "installed": [],
+    "preferredPrimitives": [],
+    "patterns": []
+  },
+  "constraints": {
+    "must": [],
+    "avoid": [
+      "cartoon/illustrated imagery",
+      "stock UI buttons"
+    ]
+  },
+  "decisions": [
+    {
+      "date": "2026-10-11",
+      "decision": "Realistic editorial look: real Wikimedia Commons photography (credited), no cartoon illustration. Scroll-tear transition (ref: 21st.dev kedhareswer scroll-tear template) adapted as each day's gate photo tearing open over handmade Sanganer-paper sheets; activities as postcards with India Post postmarks."
+    }
+  ],
+  "evidence": [
+    {
+      "fact": "project.stack:react",
+      "source": "package.json"
+    },
+    {
+      "fact": "project.stack:vite",
+      "source": "package.json"
+    }
+  ],
+  "generatedAt": "2026-10-11T06:52:16.998Z"
+}

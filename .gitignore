@@ -1,0 +1,5 @@
+node_modules/
+dist/
+scripts/.itinerary.html
+.DS_Store
+*.log
