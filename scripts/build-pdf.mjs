@@ -1,13 +1,12 @@
 // Builds public/Jaipur-Cultural-Journey-Itinerary.pdf from the itinerary data.
 // Run with `npm run pdf`. Uses the local Chrome; override with CHROME_PATH.
-import { readFileSync, writeFileSync, existsSync } from 'node:fs'
+import { writeFileSync, existsSync } from 'node:fs'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import path from 'node:path'
 import puppeteer from 'puppeteer-core'
 import { days, trip } from '../src/data/itinerary.js'
 
 const root = path.dirname(path.dirname(fileURLToPath(import.meta.url)))
-const credits = JSON.parse(readFileSync(path.join(root, 'src/data/credits.json'), 'utf8'))
 const out = path.join(root, 'public', trip.pdf)
 const img = (key) => pathToFileURL(path.join(root, 'public/photos', `${key}.jpg`)).href
 
@@ -69,7 +68,7 @@ const contents = `
     </a></li>`
       )
       .join('')}
-    <li><a href="#farewell"><span class="toc-n">—</span><span class="toc-t"><b>Khamma Ghani</b><i>Farewell &amp; photography credits</i></span><span class="toc-go">→</span></a></li>
+    <li><a href="#farewell"><span class="toc-n">—</span><span class="toc-t"><b>Khamma Ghani</b><i>Farewell</i></span><span class="toc-go">→</span></a></li>
   </ol>
   <p class="hint">Tip: every title in this document is a link. Tap a day to jump to it, and tap “Open in Maps” on any activity for directions.</p>
 </section>`
@@ -113,15 +112,6 @@ const dayPage = (d, i) => `
   </footer>
 </section>`
 
-const creditRows = []
-for (const d of days) {
-  creditRows.push([`Day ${d.n} gate`, d.gate.photo], [`Day ${d.n}`, d.hero.photo])
-  d.activities.forEach((a) => creditRows.push([`Day ${d.n} · ${a.tag}`, a.photo]))
-}
-creditRows.unshift(['Cover', 'gate-1'])
-creditRows.push(['Farewell', 'finale'])
-const seen = new Set()
-
 const farewell = `
 <section class="page paper farewell" id="farewell">
   <p class="dev big">खम्मा घणी</p>
@@ -135,19 +125,6 @@ const farewell = `
       .join('')}
   </div>
   <p class="back"><a href="#contents">↑ Back to contents</a></p>
-</section>
-<section class="page paper credits">
-  <h2 class="small">Photography credits</h2>
-  <p class="intro">All photographs are from Wikimedia Commons, used under the licences shown. Each title links to its source.</p>
-  <ul>
-    ${creditRows
-      .filter(([, k]) => credits[k] && !seen.has(k) && seen.add(k))
-      .map(([label, k]) => {
-        const c = credits[k]
-        return `<li><b>${esc(label)}</b> <a href="${esc(c.source)}">${esc(c.title)}</a> · ${esc(c.artist || 'Unknown author')} · ${c.licenseUrl ? `<a href="${esc(c.licenseUrl)}">${esc(c.license)}</a>` : esc(c.license)}</li>`
-      })
-      .join('')}
-  </ul>
 </section>`
 
 const css = `
@@ -161,6 +138,7 @@ h1, h2, h3, p, figure, blockquote { margin: 0; }
 .eyebrow { font-size: 8.5pt; letter-spacing: .28em; text-transform: uppercase; }
 .rose { color: #b4566a; }
 .page { position: relative; width: 210mm; height: 297mm; overflow: hidden; page-break-after: always; }
+.page:last-child { page-break-after: auto; }
 .paper { background: #f3ebdc; padding: 18mm 18mm 16mm; }
 .bleed { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
@@ -217,10 +195,6 @@ h2.small { font-size: 26pt; }
 .quotes figcaption { margin-top: 3mm; font-size: 7.6pt; letter-spacing: .24em; text-transform: uppercase; color: #5b4a3a; }
 .back { position: absolute; left: 0; right: 0; bottom: 16mm; font-size: 9pt; }
 .back a { color: #b4566a; text-decoration: none; font-weight: 500; }
-.credits ul { list-style: none; padding: 0; margin: 6mm 0 0; columns: 2; column-gap: 8mm; font-size: 7pt; line-height: 1.4; color: #4a3b2d; }
-.credits li { break-inside: avoid; margin-bottom: 2.2mm; }
-.credits li b { display: block; color: #241a12; font-weight: 500; }
-.credits a { text-decoration: none; color: #8a3a4c; }
 `
 
 const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><title>${esc(trip.title)} · Itinerary</title>
