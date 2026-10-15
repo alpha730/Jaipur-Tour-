@@ -391,17 +391,27 @@ a {
   background: radial-gradient(ellipse at center, rgba(14, 9, 6, 0.55), rgba(14, 9, 6, 0) 68%);
 }
 .hero-dev {
-  font-family: var(--dev);
-  font-size: clamp(1.15rem, 2vw, 1.5rem);
-  color: #f6cfae;
+  font-family: 'Noto Serif Devanagari', var(--dev);
+  font-weight: 800;
+  font-size: clamp(1.7rem, 3.4vw, 2.6rem);
+  line-height: 1.3;
+  color: #ffd27a;
+  text-shadow: 0 2px 4px rgba(20, 8, 4, 0.9), 0 0 26px rgba(255, 170, 60, 0.55);
 }
 .hero-kicker {
-  margin-top: 6px;
-  font-size: clamp(0.6rem, 0.9vw, 0.74rem);
-  font-weight: 400;
-  letter-spacing: 0.34em;
+  display: inline-block;
+  margin-top: 10px;
+  padding: 7px 18px;
+  border-radius: 999px;
+  background: rgba(20, 10, 6, 0.62);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-size: clamp(0.68rem, 1.05vw, 0.86rem);
+  font-weight: 600;
+  letter-spacing: 0.26em;
   text-transform: uppercase;
-  color: rgba(248, 241, 228, 0.88);
+  color: #fff4dc;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 .hero-copy h1 {
   margin-top: 14px;
@@ -910,6 +920,11 @@ a {
   .hero-sub {
     letter-spacing: 0.16em;
     line-height: 1.6;
+  }
+  .hero-kicker {
+    max-width: 92%;
+    border-radius: 14px;
+    letter-spacing: 0.14em;
   }
   .kicker {
     letter-spacing: 0.2em;
