@@ -23,21 +23,6 @@ function edge(seed, steps, amp) {
 
 const px = (v) => `${v.toFixed(1)}px`
 
-// Vertical tear down the middle. `rim` widens the edge to show the white paper fibre.
-export function verticalTear(seed, { steps = 46, amp = 22 } = {}) {
-  const o = edge(seed, steps, amp)
-  const fib = edge(seed + 7, steps, 6)
-  const pt = (i, extra) => `calc(50% + ${px(o[i] + extra)}) ${((i / steps) * 100).toFixed(2)}%`
-  const leftEdge = (rim) => o.map((_, i) => pt(i, rim ? 4 + Math.abs(fib[i]) * 1.3 : 0))
-  const rightEdge = (rim) => o.map((_, i) => pt(i, rim ? -(4 + Math.abs(fib[i]) * 1.3) : 0))
-  return {
-    left: `polygon(0 0, ${leftEdge(false).join(', ')}, 0 100%)`,
-    leftRim: `polygon(0 0, ${leftEdge(true).join(', ')}, 0 100%)`,
-    right: `polygon(100% 0, ${rightEdge(false).join(', ')}, 100% 100%)`,
-    rightRim: `polygon(100% 0, ${rightEdge(true).join(', ')}, 100% 100%)`,
-  }
-}
-
 // A sheet with deckle edges top and bottom. `inset` pulls the edge inward for the inner layer.
 export function deckleSheet(seed, { steps = 60, amp = 14, depth = 28, inset = 0 } = {}) {
   const top = edge(seed, steps, amp)

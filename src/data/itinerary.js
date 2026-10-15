@@ -40,6 +40,8 @@ export const days = [
     ac: '#e07a8f',
     gate: { photo: 'gate-1', caption: 'Hawa Mahal, Jaipur' },
     hero: { photo: 'hero-1', caption: 'Courtyard, Rambagh Palace' },
+    // Day 1 opens on Hawa Mahal, so its collage uses Jaipur scenes instead of the gate.
+    collage: ['d1-checkin', 'd1-dinner', 'finale', 'd2-bazaar', 'd5-amer', 'd6-jantar'],
     activities: [
       { period: 'Afternoon', time: '12:00 PM – 03:00 PM', title: 'Arrival in Jaipur & Heritage Hotel Check-In', tag: 'Stay & Heritage', desc: 'Arrive in Jaipur. Check into your heritage hotel that reflects the rich architecture of the region.', photo: 'd1-checkin', caption: 'Samode Haveli, Jaipur' },
       { period: 'Evening', time: '07:30 PM onwards', title: 'Welcome Dinner featuring Traditional Rajasthani Cuisine', tag: 'Culinary', desc: 'A curated welcome dinner featuring traditional Rajasthani cuisine, setting the gastronomic stage for the days ahead.', photo: 'd1-dinner', caption: 'A Rajasthani thali' },

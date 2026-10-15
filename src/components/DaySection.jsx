@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '../lib/scroll'
 import { deckleSheet } from '../lib/tear'
 import { photo } from '../data/itinerary'
-import TearGate from './TearGate'
+import ZoomCollage from './ZoomCollage'
 import Postcard from './Postcard'
 
 const roman = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII']
@@ -61,7 +61,7 @@ function GateLabel({ day, first }) {
         <h3>{day.title}</h3>
       </div>
       <div className="gate-cue">
-        <span>Scroll to tear open</span>
+        <span>Scroll to step into the day</span>
         <i />
       </div>
       <p className="photo-note gate-note">{day.gate.caption}</p>
@@ -81,28 +81,27 @@ function DaySection({ day, first, onActive }) {
         defaults: { ease: 'none' },
         scrollTrigger: { trigger: intro.current, start: 'top top', end: 'bottom bottom', scrub: 0.8 },
       })
-      tl.to(q('.hero-copy, .gate-label, .gate-cue, .gate-note'), { opacity: 0, y: -40, duration: 0.1 }, 0)
-        // The tear starts as a hairline crack, then rips apart.
-        // Until the tear begins, show the unsplit photo so no seam is visible.
-        .fromTo(q('.tear-half'), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.001 }, 0.03)
-        .set(q('.tear-whole'), { autoAlpha: 0 }, 0.031)
-        .fromTo(q('.tear-rim'), { opacity: 0 }, { opacity: 1, duration: 0.05 }, 0.03)
-        .to(q('.tear-half'), { filter: 'drop-shadow(0px 12px 28px rgba(0, 0, 0, 0.55))', duration: 0.08 }, 0.03)
-        .to(q('.tear-left'), { xPercent: -3, rotateZ: -0.6, duration: 0.12, ease: 'power1.out' }, 0.04)
-        .to(q('.tear-right'), { xPercent: 3, rotateZ: 0.6, duration: 0.12, ease: 'power1.out' }, 0.04)
-        .to(q('.tear-left'), { xPercent: -62, rotateY: 24, rotateZ: -4, duration: 0.4, ease: 'power2.in' }, 0.16)
-        .to(q('.tear-right'), { xPercent: 62, rotateY: -24, rotateZ: 4, duration: 0.4, ease: 'power2.in' }, 0.16)
-        .to(q('.tear-gate'), { scale: 1.12, duration: 0.56, ease: 'power1.in' }, 0)
-        .fromTo(q('.day-hero-img'), { scale: 1.3 }, { scale: 1.04, duration: 0.6, ease: 'power2.out' }, 0.12)
-        .from(q('.reveal'), { y: 40, opacity: 0, stagger: 0.03, duration: 0.12, ease: 'power2.out' }, 0.58)
-        .set(q('.tear-gate'), { autoAlpha: 0 }, 0.57)
-        .to({}, { duration: 0.14 })
+      const items = q('.zc-item')
+      // Each item zooms from scale 1 (collage) to its own factor k (gone off-screen, or
+      // filling the stage for the main photo).
+      const zoomIn = (at, dur) =>
+        items.forEach((el) => tl.to(el, { scale: +el.dataset.k, duration: dur, ease: 'power2.in' }, at))
 
-      gsap.fromTo(
-        q('.tear-gate'),
-        { filter: 'brightness(0.55)' },
-        { filter: 'brightness(1)', ease: 'none', scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'top top', scrub: true } }
-      )
+      tl.to(q('.hero-copy, .gate-label, .gate-cue, .gate-note'), { opacity: 0, y: -40, duration: 0.1 }, first ? 0.02 : 0)
+      if (first) {
+        // Day 1 opens on Hawa Mahal filling the screen: pull back to reveal the collage,
+        // let Hawa Mahal give way to the day's photo, then dive into it.
+        items.forEach((el) => tl.fromTo(el, { scale: +el.dataset.k }, { scale: 1, duration: 0.28, ease: 'power2.out' }, 0.04))
+        tl.to(q('.zc-lead'), { opacity: 0, duration: 0.08 }, 0.34)
+        zoomIn(0.44, 0.3)
+        tl.set(q('.zoom-collage'), { autoAlpha: 0 }, 0.74)
+          .from(q('.reveal'), { y: 40, opacity: 0, stagger: 0.025, duration: 0.1, ease: 'power2.out' }, 0.74)
+      } else {
+        zoomIn(0.08, 0.5)
+        tl.set(q('.zoom-collage'), { autoAlpha: 0 }, 0.58)
+          .from(q('.reveal'), { y: 40, opacity: 0, stagger: 0.03, duration: 0.12, ease: 'power2.out' }, 0.58)
+      }
+      tl.to({}, { duration: 0.12 })
 
       // On phones the cards rise straight up; a sideways start would overhang the screen.
       const slide = window.matchMedia('(max-width: 760px)').matches ? 0 : 80
@@ -138,7 +137,12 @@ function DaySection({ day, first, onActive }) {
       <div ref={intro} className="day-intro">
         <div className="stage">
           <DayHero day={day} />
-          <TearGate src={day.gate.photo} seed={day.n * 17} eager={first} />
+          <ZoomCollage
+            main={day.hero.photo}
+            lead={first ? day.gate.photo : null}
+            others={first ? day.collage : [...day.activities.map((a) => a.photo), day.gate.photo]}
+            eager={first}
+          />
           <GateLabel day={day} first={first} />
         </div>
       </div>

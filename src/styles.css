@@ -228,46 +228,33 @@ a {
   perspective: 1800px;
 }
 
-.tear-gate {
+.zoom-collage {
   position: absolute;
   inset: 0;
   z-index: 2;
-  transform-style: preserve-3d;
-  will-change: transform;
+  background: #0d0906;
 }
-.tear-half {
+.zc-item {
   position: absolute;
   inset: 0;
   will-change: transform;
-  filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0));
+  pointer-events: none;
 }
-.tear-left {
-  transform-origin: 0% 50%;
+.zc-frame {
+  position: absolute;
+  overflow: hidden;
+  box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.8);
 }
-.tear-right {
-  transform-origin: 100% 50%;
-}
-.tear-rim {
+.zc-frame img {
   position: absolute;
   inset: 0;
-  background: var(--fibres), var(--grain), var(--rim);
-}
-.tear-photo {
-  position: absolute;
-  inset: 0;
-}
-.tear-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.tear-photo::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(14, 9, 6, 0.62) 0%, rgba(14, 9, 6, 0.1) 30%, rgba(14, 9, 6, 0.1) 55%, rgba(14, 9, 6, 0.72) 100%);
+.zc-item:not(.zc-main) .zc-frame img {
+  filter: saturate(0.92) brightness(0.86);
 }
-
 .day-hero {
   position: absolute;
   inset: 0;
@@ -443,6 +430,8 @@ a {
 
 .gate-label {
   position: absolute;
+  background: radial-gradient(ellipse at center, rgba(13, 9, 6, 0.75), rgba(13, 9, 6, 0) 70%);
+  padding-block: 28px;
   left: 0;
   right: 0;
   bottom: clamp(110px, 17vh, 180px);
