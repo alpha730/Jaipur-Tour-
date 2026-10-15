@@ -1,6 +1,6 @@
 # Jaipur Cultural Journey
 
-A scroll-driven website for an 8-day, 7-night itinerary through Jaipur and Rajasthan. Each day's gate photograph tears open as you scroll to reveal the day, its activities appear as postcards, and the page ends with a downloadable, interactive PDF of the full itinerary.
+A scroll-driven website for an 8-day, 7-night itinerary through Jaipur and Rajasthan. It opens on Hawa Mahal, and each day begins as a collage of that day's photos that zooms in as you scroll until the main photo fills the screen. The activities appear as postcards, and the page ends with a downloadable, interactive PDF of the full itinerary.
 
 Built with React, Vite, GSAP ScrollTrigger, Lenis and react-three-fiber.
 
